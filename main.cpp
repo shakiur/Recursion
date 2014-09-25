@@ -10,8 +10,13 @@ void printPermutations(string);
 
 void calcPermutations(string, string, int, bool[], int);
 
+// Print all permutations without repeating patterns
+void printPermutationsNoRpt(string);
+
+void calcPermutationsNoRpt(string, string, int, bool[], int);
+
 int main() {
-	printPermutations("abcd");
+	printPermutationsNoRpt("wxyz");
 }
 
 int binarySearch(int array[], int lower, int upper, int target) {
@@ -51,7 +56,7 @@ void calcPermutations(	string str,
 						int place) {
 
 	if(place == str_len){
-		cout << str_perm << endl;	
+		cout << str_perm << ": FULL PERM FOUND" << endl << endl;	
 	}
 	else {
 
@@ -61,6 +66,7 @@ void calcPermutations(	string str,
 
 				str_perm += str[i];
 				hold_array[i] = true;
+				cout << str_perm << endl;
 
 				calcPermutations(str, str_perm, 
 								 str_len, hold_array,
@@ -69,9 +75,50 @@ void calcPermutations(	string str,
 				hold_array[i] = false;
 
 				str_perm = str_perm.substr(0,str_perm.length()-1);
+				
 			}
 
 		}
+
+	}
+
+}
+
+void printPermutationsNoRpt(string str) {
+
+	int str_len = str.length();
+	string str_perm;
+
+	bool hold_arr[str_len];
+
+	// Set array to false
+	for(int i = 0; i < str_len; i++) {
+		hold_arr[i] = false;
+	}
+
+	calcPermutationsNoRpt(str, str_perm, str_len, hold_arr, 0);
+
+}
+
+void calcPermutationsNoRpt(	string str, 
+							string str_perm, 
+							int str_len, 
+							bool hold_arr[], 
+							int place){
+
+	for(int i = 0; i < str_len; i++) {
+
+		str_perm += str[i];
+
+		cout << str_perm << endl;
+
+		string new_str = str.substr(1,str.length());
+
+		calcPermutationsNoRpt(new_str, str_perm,
+							  new_str.length(),
+							  hold_arr, place);
+
+		//str_perm = str_perm.substr(0,str_perm.length()-1);
 
 	}
 
