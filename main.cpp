@@ -51,9 +51,7 @@ void calcPermutations(	string str,
 						int place) {
 
 	if(place == str_len){
-		cout << str_perm << endl;
-		str_perm = "";
-		
+		cout << str_perm << endl;	
 	}
 	else {
 
@@ -63,11 +61,14 @@ void calcPermutations(	string str,
 
 				str_perm += str[i];
 				hold_array[i] = true;
+
 				calcPermutations(str, str_perm, 
 								 str_len, hold_array,
 								 place+1);
+
 				hold_array[i] = false;
-				
+
+				str_perm = str_perm.substr(0,str_perm.length()-1);
 			}
 
 		}
