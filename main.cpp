@@ -13,7 +13,7 @@ void calcPermutations(string, string, int, bool[], int);
 // Print all permutations without repeating patterns
 void printPermutationsNoRpt(string);
 
-void calcPermutationsNoRpt(string, string, int, bool[], int);
+void calcPermutationsNoRpt(string, string, int, int);
 
 int main() {
 	printPermutationsNoRpt("wxyz");
@@ -89,37 +89,24 @@ void printPermutationsNoRpt(string str) {
 	int str_len = str.length();
 	string str_perm;
 
-	bool hold_arr[str_len];
-
-	// Set array to false
-	for(int i = 0; i < str_len; i++) {
-		hold_arr[i] = false;
-	}
-
-	calcPermutationsNoRpt(str, str_perm, str_len, hold_arr, 0);
+	calcPermutationsNoRpt(str, str_perm, str_len, 0);
 
 }
 
 void calcPermutationsNoRpt(	string str, 
 							string str_perm, 
 							int str_len, 
-							bool hold_arr[], 
-							int place){
+							int str_start){
 
-	for(int i = 0; i < str_len; i++) {
-
+	for(int i = str_start; i < str_len; i++) {
 		str_perm += str[i];
-
 		cout << str_perm << endl;
 
-		string new_str = str.substr(1,str.length());
+		if(i < str_len - 1) {
+			calcPermutationsNoRpt(str, str_perm, str_len, i+1);
+		}
 
-		calcPermutationsNoRpt(new_str, str_perm,
-							  new_str.length(),
-							  hold_arr, place);
-
-		//str_perm = str_perm.substr(0,str_perm.length()-1);
-
+		str_perm = str_perm.substr(0,str_perm.length()-1);
 	}
 
 }
