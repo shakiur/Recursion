@@ -15,8 +15,18 @@ void printPermutationsNoRpt(string);
 
 void calcPermutationsNoRpt(string, string, int, int);
 
+// Print all letter combinations of phone number
+void printPhoneCombos(string);
+
+// Calc individual phone permuations
+void calcPhoneCombos(string, string, bool[], bool[], int, int, int, int);
+
+char getSingleChar(int, int);
+
+string getCharsByDigit(int);
+
 int main() {
-	printPermutationsNoRpt("wxyz");
+	printPhoneCombos("8675309");
 }
 
 int binarySearch(int array[], int lower, int upper, int target) {
@@ -109,4 +119,77 @@ void calcPermutationsNoRpt(	string str,
 		str_perm = str_perm.substr(0,str_perm.length()-1);
 	}
 
+}
+
+void printPhoneCombos(string phone_num){
+
+	string phone_perm;
+	int length = phone_perm.length();
+
+	bool num_pos[length];
+	bool letter_pos[length];
+
+	// Set both arrays to false
+	for (int i = 0; i < length; i++) {
+		num_pos[i] = false;
+		letter_pos[i] = false;
+	}
+
+	calcPhoneCombos(phone_num, phone_perm, num_pos, letter_pos, 0, 0, length, 3);
+
+}
+
+void calcPhoneCombos(	string phone_num, string phone_perm,
+						bool num_pos[], bool letter_pos[], 
+						int num_index, int letter_index,
+						int phone_length, int letter_length) {
+
+	if(num_index == phone_length && letter_index == letter_length) {
+		cout << phone_perm << endl;
+	}
+
+	
+
+}
+
+
+char getSingleChar(int num, int pos) {
+	string temp = getCharsByDigit(num);
+
+	return temp[pos];
+}
+
+string getCharsByDigit(int n){
+	switch(n) {
+		case 1:
+			return "1";
+			break;
+		case 2:
+			return "ABC";
+			break;
+		case 3:
+			return "DEF";
+			break;
+		case 4:
+			return "GHI";
+			break;
+		case 5:
+			return "JKL";
+			break;
+		case 6:
+			return "MNO";
+			break;
+		case 7:
+			return "PRS";
+			break;
+		case 8:
+			return "TUV";
+			break;
+		case 9:
+			return "WXY";
+			break;
+		case 0:
+			return "0";
+			break;
+	}
 }
