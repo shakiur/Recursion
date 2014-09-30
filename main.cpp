@@ -19,14 +19,17 @@ void calcPermutationsNoRpt(string, string, int, int);
 void printPhoneCombos(string);
 
 // Calc individual phone permuations
-void calcPhoneCombos(string, string, bool[], bool[], int, int, int, int);
+void calcPhoneCombos(string, string, int, int);
 
-char getSingleChar(int, int);
+char getSingleChar(char, int);
 
-string getCharsByDigit(int);
+string getCharsByDigit(char);
 
 int main() {
+
 	printPhoneCombos("8675309");
+
+
 }
 
 int binarySearch(int array[], int lower, int upper, int target) {
@@ -124,72 +127,69 @@ void calcPermutationsNoRpt(	string str,
 void printPhoneCombos(string phone_num){
 
 	string phone_perm;
-	int length = phone_perm.length();
+	int length = phone_num.length();
 
-	bool num_pos[length];
-	bool letter_pos[length];
-
-	// Set both arrays to false
-	for (int i = 0; i < length; i++) {
-		num_pos[i] = false;
-		letter_pos[i] = false;
-	}
-
-	calcPhoneCombos(phone_num, phone_perm, num_pos, letter_pos, 0, 0, length, 3);
+	calcPhoneCombos(phone_num, phone_perm, 0, length);
 
 }
 
-void calcPhoneCombos(	string phone_num, string phone_perm,
-						bool num_pos[], bool letter_pos[], 
-						int num_index, int letter_index,
-						int phone_length, int letter_length) {
+void calcPhoneCombos(string phone_num, string phone_perm, int position, int length) {
 
-	if(num_index == phone_length && letter_index == letter_length) {
+	if(position == length) {
 		cout << phone_perm << endl;
 	}
+	else {
+		for(int i = 0; i < 3; i++) {
 
-	
+			char c = getSingleChar(phone_num[position], i);
+
+			phone_perm += c;
+
+			calcPhoneCombos(phone_num, phone_perm, position+1, length);
+
+			phone_perm = phone_perm.substr(0,phone_perm.length()-1);
+
+		}
+	}
 
 }
 
 
-char getSingleChar(int num, int pos) {
-	string temp = getCharsByDigit(num);
+char getSingleChar(char num, int pos) {
+	if(num == '0' || num == '1')
+		return num;
+	else {
+		string temp = getCharsByDigit(num);
 
-	return temp[pos];
+		return temp[pos];
+	}
 }
 
-string getCharsByDigit(int n){
+string getCharsByDigit(char n){
 	switch(n) {
-		case 1:
-			return "1";
-			break;
-		case 2:
+		case '2':
 			return "ABC";
 			break;
-		case 3:
+		case '3':
 			return "DEF";
 			break;
-		case 4:
+		case '4':
 			return "GHI";
 			break;
-		case 5:
+		case '5':
 			return "JKL";
 			break;
-		case 6:
+		case '6':
 			return "MNO";
 			break;
-		case 7:
+		case '7':
 			return "PRS";
 			break;
-		case 8:
+		case '8':
 			return "TUV";
 			break;
-		case 9:
+		case '9':
 			return "WXY";
-			break;
-		case 0:
-			return "0";
 			break;
 	}
 }
